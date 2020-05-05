@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": { "*": ["types/*"] },
+        "outDir": "./dist",
+        "target": "es2017",
+        "module": "commonjs",
+        "noImplicitAny": true,
+        "lib": ["esnext", "dom"],
+        "resolveJsonModule": true,
+        "declaration": true,
+        "strict": true,
+        "jsx": "react"
+    },
+    "include": ["src/**/*"]
+}
