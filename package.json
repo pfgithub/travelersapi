@@ -12,10 +12,8 @@
         "dist/**/*"
     ],
     "dependencies": {
-        "fs": "^0.0.1-security",
         "jquery": "^3.5.1",
         "jsdom": "^16.2.2",
-        "path": "^0.12.7",
         "signalr": "^2.4.1",
         "tough-cookie": "^4.0.0",
         "util": "^0.12.3"
