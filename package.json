@@ -1,8 +1,16 @@
 {
     "name": "travelersapi",
     "version": "1.0.0",
-    "main": "index.js",
+    "main": "dist/lib.js",
+    "types": "dist/lib.d.ts",
+    "repository": "pfgithub/travelersapi",
     "license": "MIT",
+    "scripts": {
+        "prepublishOnly": "tsc"
+    },
+    "files": [
+        "dist/**/*"
+    ],
     "dependencies": {
         "fs": "^0.0.1-security",
         "jquery": "^3.5.1",
