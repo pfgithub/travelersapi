@@ -1,6 +1,6 @@
 {
     "name": "travelersapi",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "main": "dist/lib.js",
     "types": "dist/lib.d.ts",
     "repository": "pfgithub/travelersapi",
