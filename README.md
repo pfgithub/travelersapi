@@ -2,6 +2,10 @@ helper for connecting to https://thetravelers.online/ from node
 
 # example
 
+```bash
+npm i --save travelersapi
+```
+
 ```ts
 import { createBot, generateWorldTileAt } from "travelersapi";
 
