@@ -7,7 +7,7 @@ npm i --save travelersapi
 ```
 
 ```ts
-import { createBot, generateWorldTileAt } from "travelersapi";
+const { createBot, generateWorldTileAt } = require("travelersapi");
 
 const traveler = createBot();
 
