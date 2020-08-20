@@ -46,12 +46,6 @@ const js = (a: TemplateStringsArray, ..._: never[]) => a[0];
 const html = (a: TemplateStringsArray, ..._: never[]) => a[0];
 
 async function login(bot: TravelersBot, accountToken: string) {
-    console.log(global.window);
-    if (global.window)
-        throw new Error(
-            "Login cannot be run while another bot is initializing. Wait to call this until the previous bot has finished initializing",
-        );
-
     const cookieJar = new CookieJar();
 
     cookieJar.setCookie(
@@ -94,7 +88,6 @@ async function login(bot: TravelersBot, accountToken: string) {
     const jQuery = requireNoCache("jquery");
     window.jQuery = jQuery;
     window.$ = jQuery;
-    console.log("Hello there! jQuery: ", jQuery);
     const signalr = requireNoCache("signalr");
     const hubs = requireNoCache("./hubs.js");
     
