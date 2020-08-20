@@ -16,6 +16,8 @@ declare global {
 
 // jsdom setup
 import { JSDOM, CookieJar, DOMWindow } from "jsdom";
+import * as vm from "vm";
+import * as fs from "fs";
 
 import * as t from "./types";
 
@@ -40,7 +42,11 @@ export function createBot(): TravelersBot {
     return bot;
 }
 
+const js = (a: TemplateStringsArray, ..._: never[]) => a[0];
+const html = (a: TemplateStringsArray, ..._: never[]) => a[0];
+
 async function login(bot: TravelersBot, accountToken: string) {
+    console.log(global.window);
     if (global.window)
         throw new Error(
             "Login cannot be run while another bot is initializing. Wait to call this until the previous bot has finished initializing",
@@ -57,68 +63,83 @@ async function login(bot: TravelersBot, accountToken: string) {
     );
 
     let jd = new JSDOM(
-        `<!DOCTYPE html><html><head></head><body></body></html>`,
+        html`<!DOCTYPE html><html><head></head><body></body></html>`,
         {
             url: "https://thetravelers.online/",
             cookieJar,
         },
     );
-    global.window = jd.window;
-    console.log("COOKIE IS:", jd.window.document.cookie);
-    Object.assign(global.window, {
+    Object.assign(jd.window, {
         JSON,
         encodeURIComponent,
         decodeURIComponent,
+        bot,
+        console,
     });
-
-    const jQuery = await import("jquery");
-    global.window.jQuery = jQuery;
-    global.window.$ = jQuery;
-    // @ts-ignore
-    await import("signalr");
-    // @ts-ignore
-    await import("./hubs.js");
-
-    // @ts-ignore
+    
+    jd.window.requireNoCache = (module: string) => {
+        const file = fs.readFileSync(require.resolve(module), "utf-8");
+        const script = new vm.Script(file);
+        jd.window.module = {exports: {}};
+        script.runInContext(jd.window);
+        const rv = jd.window.module;
+        jd.window.module = undefined;
+        return rv.exports;
+    };
+    jd.window.result = undefined;
+    vm.createContext(jd.window);
+    
+    const script = new vm.Script(js`
+    
+    const jQuery = requireNoCache("jquery");
+    window.jQuery = jQuery;
+    window.$ = jQuery;
+    console.log("Hello there! jQuery: ", jQuery);
+    const signalr = requireNoCache("signalr");
+    const hubs = requireNoCache("./hubs.js");
+    
     let request = new window.XMLHttpRequest();
     request.open("POST", "/default.aspx/GetAutoLog", true);
     request.withCredentials = true;
     request.setRequestHeader("Content-Type", "application/json");
     request.send(JSON.stringify({}));
 
-    var autologData = await new Promise<string>((success, error) => {
-        request.onreadystatechange = () => {
-            if (request.readyState === 4 && request.statusText === "OK") {
-                success(JSON.parse(request.responseText).d);
-            } else if (request.readyState === 4 && request.status === 200) {
-                success(JSON.parse(request.responseText).d);
-            } else if (request.readyState === 4) {
-                error(
-                    new Error(
+    result = (async () => {
+        let autologData = await new Promise((success, error) => {
+            request.onreadystatechange = () => {
+                if (request.readyState === 4 && request.statusText === "OK") {
+                    success(JSON.parse(request.responseText).d);
+                } else if (request.readyState === 4 && request.status === 200) {
+                    success(JSON.parse(request.responseText).d);
+                } else if (request.readyState === 4) {
+                    error(new Error(
                         "Login Error (make sure your token is correct): " +
                             request.responseText,
-                    ),
-                );
-            }
+                    ));
+                }
+            };
+        });
+        
+        let conn = $.connection.logHub;
+        let hub = $.connection.hub;
+        
+        conn.client.getGameObject = (data/*: t.GameData*/) =>
+            bot.on.update && bot.on.update(data);
+        conn.client.getGameObjectNoCountdown = (json/*: Partial<t.GameData>*/) =>
+            bot.on.updateImmediate && bot.on.updateImmediate(json);
+        conn.client.raw = (exe/*: string*/) => bot.on.evalJS && bot.on.evalJS(exe);
+        
+        bot.send = (msg/*: t.SendMsg*/) => {
+            conn.server.fromClient(msg);
         };
-    });
-
-    const $ = global.window.$ as any;
-    let conn = $.connection.logHub;
-    let hub = $.connection.hub;
-
-    global.window = undefined;
-
-    conn.client.getGameObject = (data: t.GameData) =>
-        bot.on.update && bot.on.update(data);
-    conn.client.getGameObjectNoCountdown = (json: Partial<t.GameData>) =>
-        bot.on.updateImmediate && bot.on.updateImmediate(json);
-    conn.client.raw = (exe: string) => bot.on.evalJS && bot.on.evalJS(exe);
-
-    bot.send = (msg: t.SendMsg) => {
-        conn.server.fromClient(msg);
-    };
-
-    await new Promise(r => hub.start().done(r));
-    return JSON.parse(autologData);
+        
+        await new Promise(r => hub.start().done(r));
+        
+        return JSON.parse(autologData);
+    })()
+    
+    `);
+    
+    script.runInContext(jd.window);
+    return await jd.window.result;
 }

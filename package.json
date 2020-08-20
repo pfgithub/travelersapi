@@ -22,6 +22,8 @@
         "@types/jquery": "^3.3.38",
         "@types/jsdom": "^16.2.1",
         "@types/node": "^13.13.5",
-        "@types/tough-cookie": "^4.0.0"
+        "@types/tough-cookie": "^4.0.0",
+        "ts-node": "^8.10.2",
+        "typescript": "^3.9.7"
     }
 }
