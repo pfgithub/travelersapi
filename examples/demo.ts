@@ -11,7 +11,7 @@ traveler.on.updateImmediate = msg => {};
 traveler.on.evalJS = js => {};
 
 traveler
-    .login("ACCOUNT T= COOKIE VALUE")
+    .login("ACCOUNT T= COOKIE VALUE", "CAPTCHA TOKEN")
     .then(startingData => console.log("Ready!", startingData));
 
 process.on("unhandledRejection", (reason, p) => {

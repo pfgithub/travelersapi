@@ -28,7 +28,7 @@ type TravelersBot = {
         evalJS?: (data: string) => void;
     };
     send: (message: t.SendMsg) => void;
-    login: (accountToken: string) => Promise<t.GameData>;
+    login: (accountToken: string, captcha: string) => Promise<t.GameData>;
 };
 
 export function createBot(): TravelersBot {
@@ -37,7 +37,7 @@ export function createBot(): TravelersBot {
         send: () => {
             throw new Error("Not started yet");
         },
-        login: (token: string) => login(bot, token),
+        login: (token, captcha) => login(bot, token, captcha),
     };
     return bot;
 }
@@ -45,7 +45,7 @@ export function createBot(): TravelersBot {
 const js = (a: TemplateStringsArray, ..._: never[]) => a[0];
 const html = (a: TemplateStringsArray, ..._: never[]) => a[0];
 
-async function login(bot: TravelersBot, accountToken: string) {
+async function login(bot: TravelersBot, accountToken: string, captcha: string) {
     const cookieJar = new CookieJar();
 
     cookieJar.setCookie(
@@ -69,6 +69,7 @@ async function login(bot: TravelersBot, accountToken: string) {
         decodeURIComponent,
         bot,
         console,
+        captcha,
     });
     
     jd.window.requireNoCache = (module: string) => {
@@ -95,7 +96,7 @@ async function login(bot: TravelersBot, accountToken: string) {
     request.open("POST", "/default.aspx/GetAutoLog", true);
     request.withCredentials = true;
     request.setRequestHeader("Content-Type", "application/json");
-    request.send(JSON.stringify({}));
+    request.send(JSON.stringify({captcha}));
 
     result = (async () => {
         let autologData = await new Promise((success, error) => {

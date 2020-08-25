@@ -20,8 +20,12 @@ traveler.on.updateImmediate = msg => {};
 traveler.on.evalJS = js => {};
 
 traveler
-    .login("ACCOUNT T= COOKIE VALUE")
+    .login("ACCOUNT T= COOKIE VALUE", "CAPTCHA TOKEN")
     .then(startingData => console.log("Ready!", startingData));
+
+process.on("unhandledRejection", (reason, p) => {
+    console.log("Unhandled Rejection at:", p, "reason:", reason);
+});
 ```
 
 > Note: the typescript types provided are incomplete! You may wish to not use them or make your own.
@@ -29,6 +33,18 @@ traveler
 # account token
 
 go to https://thetravelers.online/ and log in. in the network tab of console, find the cookie `T=cdsajnkcjnlsdcnjalkcjandlsk`. The part after the = is your token.
+
+# captcha token
+
+- go to thetravelers.online
+- complete the captcha (do not press "wake up")
+- paste this script into the console:
+
+```js
+prompt("Copy the captcha:", SOCKET.captcha);
+```
+
+you have to do this every time you log in. tokens expire quickly and you cannot reuse the same token multiple times.
 
 # help
 
