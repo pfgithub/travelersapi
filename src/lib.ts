@@ -113,6 +113,7 @@ async function login(bot: TravelersBot, accountToken: string, captcha: string) {
                 }
             };
         });
+        const alData = JSON.parse(autologData);
         
         let conn = $.connection.logHub;
         let hub = $.connection.hub;
@@ -124,12 +125,12 @@ async function login(bot: TravelersBot, accountToken: string, captcha: string) {
         conn.client.raw = (exe/*: string*/) => bot.on.evalJS && bot.on.evalJS(exe);
         
         bot.send = (msg/*: t.SendMsg*/) => {
-            conn.server.fromClient(msg);
+            conn.server.fromClient(msg, alData.data.PLAY_AUTH);
         };
         
         await new Promise(r => hub.start().done(r));
         
-        return JSON.parse(autologData);
+        return alData;
     })()
     
     `);
