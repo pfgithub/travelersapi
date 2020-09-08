@@ -32,7 +32,10 @@ process.on("unhandledRejection", (reason, p) => {
 
 # account token
 
-go to https://thetravelers.online/ and log in. in the network tab of console, find the cookie `T=cdsajnkcjnlsdcnjalkcjandlsk`. The part after the = is your token.
+- go to https://thetravelers.online/ and log in.
+- go to the storage tab or your browser's equivalent
+- find the cookie `T=cdsajnkcjnlsdcnjalkcjandlsk`
+- The part after the = is your token.
 
 # captcha token
 
