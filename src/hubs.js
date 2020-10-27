@@ -9,8 +9,8 @@
  *
  */
 
-// <reference path="..\..\SignalR.Client.JS\Scripts\jquery-1.6.4.js" />
-// <reference path="jquery.signalR.js" />
+//// <reference path="..\..\SignalR.Client.JS\Scripts\jquery-1.6.4.js" />
+//// <reference path="jquery.signalR.js" />
 (function ($, window, undefined) {
     /// <param name="$" type="jQuery" />
     "use strict";
@@ -83,8 +83,172 @@
         proxies['logHub'] = this.createHubProxy('logHub'); 
         proxies['logHub'].client = { };
         proxies['logHub'].server = {
-            fromClient: function (job) {
-                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["fromClient"], $.makeArray(arguments)));
+            cl_break: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_break"], $.makeArray(arguments)));
+             },
+
+            cl_build: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_build"], $.makeArray(arguments)));
+             },
+
+            cl_cancel_break: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_cancel_break"], $.makeArray(arguments)));
+             },
+
+            cl_chat: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_chat"], $.makeArray(arguments)));
+             },
+
+            cl_craft: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_craft"], $.makeArray(arguments)));
+             },
+
+            cl_craft_cancelall: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_craft_cancelall"], $.makeArray(arguments)));
+             },
+
+            cl_craft_cancelone: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_craft_cancelone"], $.makeArray(arguments)));
+             },
+
+            cl_dequip: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_dequip"], $.makeArray(arguments)));
+             },
+
+            cl_doublestep: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_doublestep"], $.makeArray(arguments)));
+             },
+
+            cl_equip: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_equip"], $.makeArray(arguments)));
+             },
+
+            cl_equipment: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_equipment"], $.makeArray(arguments)));
+             },
+
+            cl_event_choice: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_event_choice"], $.makeArray(arguments)));
+             },
+
+            cl_genmsg: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_genmsg"], $.makeArray(arguments)));
+             },
+
+            cl_gettree: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_gettree"], $.makeArray(arguments)));
+             },
+
+            cl_hands: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_hands"], $.makeArray(arguments)));
+             },
+
+            cl_int_acceptchal: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_int_acceptchal"], $.makeArray(arguments)));
+             },
+
+            cl_int_exchange: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_int_exchange"], $.makeArray(arguments)));
+             },
+
+            cl_int_getmsg: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_int_getmsg"], $.makeArray(arguments)));
+             },
+
+            cl_int_killoffline: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_int_killoffline"], $.makeArray(arguments)));
+             },
+
+            cl_int_leavemsg: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_int_leavemsg"], $.makeArray(arguments)));
+             },
+
+            cl_int_lootoffline: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_int_lootoffline"], $.makeArray(arguments)));
+             },
+
+            cl_int_next: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_int_next"], $.makeArray(arguments)));
+             },
+
+            cl_int_removemsg: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_int_removemsg"], $.makeArray(arguments)));
+             },
+
+            cl_int_takeall: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_int_takeall"], $.makeArray(arguments)));
+             },
+
+            cl_learn: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_learn"], $.makeArray(arguments)));
+             },
+
+            cl_leave_int: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_leave_int"], $.makeArray(arguments)));
+             },
+
+            cl_loot_exchange: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_loot_exchange"], $.makeArray(arguments)));
+             },
+
+            cl_loot_next: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_loot_next"], $.makeArray(arguments)));
+             },
+
+            cl_loot_takeall: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_loot_takeall"], $.makeArray(arguments)));
+             },
+
+            cl_pvp_attack: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_pvp_attack"], $.makeArray(arguments)));
+             },
+
+            cl_pvp_battleopt: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_pvp_battleopt"], $.makeArray(arguments)));
+             },
+
+            cl_pvp_endchat: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_pvp_endchat"], $.makeArray(arguments)));
+             },
+
+            cl_pvp_execute: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_pvp_execute"], $.makeArray(arguments)));
+             },
+
+            cl_pvp_startready: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_pvp_startready"], $.makeArray(arguments)));
+             },
+
+            cl_reenter: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_reenter"], $.makeArray(arguments)));
+             },
+
+            cl_reincarnate: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_reincarnate"], $.makeArray(arguments)));
+             },
+
+            cl_reset_skills: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_reset_skills"], $.makeArray(arguments)));
+             },
+
+            cl_setDir: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_setDir"], $.makeArray(arguments)));
+             },
+
+            cl_skill_upgrade: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_skill_upgrade"], $.makeArray(arguments)));
+             },
+
+            cl_suicide: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_suicide"], $.makeArray(arguments)));
+             },
+
+            cl_tut_inc: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_tut_inc"], $.makeArray(arguments)));
+             },
+
+            cl_tut_skip: function (job, PLAY_AUTH) {
+                return proxies['logHub'].invoke.apply(proxies['logHub'], $.merge(["cl_tut_skip"], $.makeArray(arguments)));
              }
         };
 

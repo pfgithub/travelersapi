@@ -125,7 +125,11 @@ async function login(bot: TravelersBot, accountToken: string, captcha: string) {
         conn.client.raw = (exe/*: string*/) => bot.on.evalJS && bot.on.evalJS(exe);
         
         bot.send = (msg/*: t.SendMsg*/) => {
-            conn.server.fromClient(msg, alData.data.PLAY_AUTH);
+            if(!("action" in msg)) throw new Error("msg missing action");
+            const anme = "cl_"+msg.action.split("-").join("_");
+            if(!conn.server[anme]) throw new Error("unsupported action <"+msg.action+">. Either this is not an action or the travelers api needs to be updated with a new hub.js");
+
+            conn.server[anme](msg, alData.data.PLAY_AUTH);
         };
         
         await new Promise(r => hub.start().done(r));
