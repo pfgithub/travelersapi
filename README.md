@@ -59,3 +59,9 @@ SOCKET.send = a => (console.log("i>", a), window.gsend(a));
 window.adata = ENGINE.applyData;
 ENGINE.applyData = (...a) => (console.log("I<", ...a), window.adata(...a));
 ```
+
+# getPerlin, containsEvent
+
+`containsEvent(138750, 62680)` ⇒ true
+
+`containsEvent(138750, 62681)` ⇒ false

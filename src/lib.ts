@@ -1,5 +1,5 @@
-import { generateWorldTileAt } from "./worldgen.js";
-export { generateWorldTileAt };
+import { generateWorldTileAt, getPerlin, containsEvent } from "./worldgen.js";
+export { generateWorldTileAt, getPerlin, containsEvent };
 
 declare global {
     namespace NodeJS {
